@@ -1,6 +1,6 @@
 services:
     worker:
-        image: ghcr.io/max-insights/worker/worker:${IMAGE_TAG:-release}
+        image: ghcr.io/max-insights/worker/worker:${IMAGE_TAG:-master}
         user: ${PUID:-0}:${PGID:-0}
         container_name: worker
         build: .

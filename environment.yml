@@ -4,17 +4,18 @@ channels:
     - bioconda
 dependencies:
     - python=3.13
-    - opencv=4.12.0
-    - numpy=2.3.2
     - ffmpeg=8.0
-    - tqdm
+    - numpy=2.3.2
+    - opencv=4.12.0
+    - boto3
+    - curl
+    - jq
+    - nomad
+    - perl-image-exiftool
     - pytest
     - requests
-    - curl
-    - boto3
-    - perl-image-exiftool
-    - nomad
+    - tqdm
     - pip:
-          - typed-ffmpeg==3.6
-          - mcap==1.3.0
           - mcap-protobuf-support==0.5.3
+          - mcap==1.3.0
+          - typed-ffmpeg==3.6
