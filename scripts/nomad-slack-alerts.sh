@@ -32,8 +32,9 @@ curl -s -N "${NOMAD_ADDR}/v1/event/stream?topic=Allocation" \
 
     job=$(echo "$line" | jq -r .job)
 
-    # Only notify Slack if job starts with "cron-"
-    if [[ "$job" == cron-* ]] || [[ "$job" == service-* ]]; then
+    # Only notify Slack if job starts with "cron-" or "service-"
+    # but not "*slack-alerts"
+    if [[ ( "$job" == cron-* || "$job" == service-* ) && "$job" != *slack-alerts ]]; then
         echo "📝 Firing slack notification for cron job: $job"
                 # Convert times to America/Los_Angeles
         started_iso=$(echo "$line" | jq -r '.failed_tasks.started')
@@ -51,6 +52,7 @@ curl -s -N "${NOMAD_ADDR}/v1/event/stream?topic=Allocation" \
           }
         ')
 
+        # Send to Slack
         curl -s -X POST -H 'Content-type: application/json' \
              --data "$payload" \
              "$SLACK_WEBHOOK_URL"
