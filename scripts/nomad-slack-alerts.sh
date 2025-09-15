@@ -56,5 +56,7 @@ curl -s -N "${NOMAD_ADDR}/v1/event/stream?topic=Allocation" \
         curl -s -X POST -H 'Content-type: application/json' \
              --data "$payload" \
              "$SLACK_WEBHOOK_URL"
+    else
+        echo "ℹ️ Skipping slack notification for job: $job"
     fi
 done
