@@ -32,6 +32,11 @@ curl -s -N "${NOMAD_ADDR}/v1/event/stream?topic=Allocation" \
 
     job=$(echo "$line" | jq -r .job)
 
+    if [[ "$line" == *"TLS handshake"* ]]; then
+        echo "⚠️ Skipping TLS handshake error for job: $job"
+        continue
+    fi
+
     # Only notify Slack if job starts with "cron-" or "service-"
     # but not "*slack-alerts"
     if [[ ( "$job" == cron-* || "$job" == service-* ) && "$job" != *slack-alerts ]]; then
